@@ -12,7 +12,7 @@ export const Hero = () => {
   });
   const opacity = useTransform(scrollYProgress,[0,0.7,1],[1,1,0]);
   return(
-    <div className="bg-background relative h-[300vh] text-white">
+    <div className="bg-background relative text-white">
       <motion.div
         style={{opacity}}
         ref={videoContainerRef}
@@ -23,12 +23,25 @@ export const Hero = () => {
           alt="hero" />
       </motion.div>
       <Container 
-        className="relative z-10 pb-7 min-h-[--hero-height] flex flex-col justify-end items-start">
+        className="relative z-10 pb-7 h-[--hero-height]">
+          <motion.div
+            className="flex flex-col h-full justify-end items-start"
+            initial="hidden"
+            variants={{
+              hidden:{opacity:0},
+              visible:{opacity:1}
+            }}
+            whileInView="visible"
+            exit="hidden"
+            animate="hidden"
+            viewport={{amount:0.98}}
+          >
           <h1 className="text-5xl font-bold mb-10">
-            Lorem ipsum dolor sit amet consectetur< br/> Pariatur, a!
+            Lorem ipsum dolor sit amet consectetur<br/> Pariatur, a!
           </h1>
-        <Button className="mb-16" size="large">Large Button</Button>
+            <Button className="mb-16" size="large">Large Button</Button>
           <p className="font-semibold">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          </motion.div>
       </Container>
     </div>
   )
