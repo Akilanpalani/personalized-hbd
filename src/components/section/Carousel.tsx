@@ -1,6 +1,6 @@
-import { useScroll, useTransform, motion } from 'framer-motion';
+import { useScroll, useTransform, motion, useMotionValueEvent } from 'framer-motion';
 import { useWindowSize } from 'react-use';
-import { useRef,useMemo } from 'react';
+import { useRef,useMemo, useState } from 'react';
 
 import {
   Content,
@@ -8,6 +8,7 @@ import {
   randomWishesSet1,
   randomWishesSet2,
 } from '../../utils/CarouselContent';
+import { Button } from '../Button';
 
 
 export const Carousel = () => {
@@ -28,51 +29,94 @@ export const Carousel = () => {
   // const scale = useTransform(scrollYProgress, [0.3, 0.5, 0.66], [3, 2.5, 1]);
   const scale = useTransform(scrollYProgress, [0.3, 0.5, 0.66], [maximumScale * 1.1, maximumScale, 1]);
 
+  const postersOpacity = useTransform(
+    scrollYProgress,
+    [0.64,0.66],
+    [0,1]
+  )
+  const posterTranslateXleft = useTransform(
+    scrollYProgress,
+    [0.64,0.66],
+    [-20,0]
+  )
+
+  const posterTranslateXright = useTransform(
+    scrollYProgress,
+    [0.64,0.66],
+    [20,0]
+  )
+
+  const [carouselVariant,setCarouselVariant] = useState<"inactive" | "active">("inactive");
+  useMotionValueEvent(scrollYProgress,"change",(progress)=>{
+    if(progress >= 0.67){
+      setCarouselVariant("active");
+    }
+    else{
+      setCarouselVariant("inactive")
+    }
+  })
+
 
   return (
-    <div className='bg-background overflow-clip pb-8'>
+    <motion.div animate={carouselVariant} className='bg-background overflow-clip pb-8'>
       <div
         ref={carouselWrapperRef}
         className='mt-[-100vh] h-[300vh] overflow-clip'
       >
-        <div className='h-screen sticky top-0 flex items-center'>
+        <div className='h-screen sticky top-5 flex items-center'>
           <div className='flex gap-5 mb-5 relative left-1/2 -translate-x-1/2'>
-            <div className='shrink-0 w-[60vw] aspect-video rounded-2xl overflow-clip'>
+            <motion.div 
+              style={{opacity:postersOpacity, x:posterTranslateXleft}}
+              className='shrink-0 w-[60vw] aspect-video md:h-[70vh] rounded-2xl overflow-clip'>
               <img
                 className='w-full h-full object-cover'
                 src={contents[0].poster}
                 alt={contents[0].name}
               />
-            </div>
+            </motion.div>
             <motion.div
               style={{ scale }}
-              className='shrink-0 w-[60vw] aspect-video rounded-2xl overflow-clip'
+              className='relative shrink-0 w-[60vw] aspect-video md:h-[70vh] rounded-2xl overflow-clip'
             >
               <img
                 className='w-full h-full object-cover'
                 src={contents[1].poster}
                 alt={contents[1].name}
               />
+              <motion.div
+                variants={{
+                  active:{opacity:1},
+                  inactive:{opacity:0},
+                }}
+                className='absolute left-0 bottom-0 flex items-center justify-between w-full text-white text-2xl font-bold p-5'>
+                  <p>The best of the best</p>
+                  <Button size="small">Click Here</Button>
+              </motion.div>
             </motion.div>
-            <div className='shrink-0 w-[60vw] aspect-video rounded-2xl overflow-clip'>
+            <motion.div 
+              style={{opacity:postersOpacity, x:posterTranslateXright}}
+              className='shrink-0 w-[60vw] aspect-video md:h-[70vh] rounded-2xl overflow-clip'>
               <img
                 className='w-full h-full object-cover'
                 src={contents[2].poster}
                 alt={contents[2].name}
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
 
       {/*  Small Carousel */}
-      <div className='space-y-3'>
+      <motion.div
+        variants={{active:{opacity:1, y:0}, inactive:{opacity:0, y:20}}}
+        transition={{duration:0.4}}
+        className='space-y-3 -mt-[20vh] pt-10'>
         <SmallCarousel contents={randomWishesSet2} />
-        <div className='[--duration:68s] [--carousel-offset:-32px]'>
+        <div className='[--duration:40s] [--carousel-offset:-20px]'>
           <SmallCarousel contents={randomWishesSet1} />
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
