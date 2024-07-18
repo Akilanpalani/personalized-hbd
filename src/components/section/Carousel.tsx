@@ -67,7 +67,7 @@ export const Carousel = () => {
           <div className='flex gap-5 mb-5 relative left-1/2 -translate-x-1/2'>
             <motion.div 
               style={{opacity:postersOpacity, x:posterTranslateXleft}}
-              className='shrink-0 w-[60vw] aspect-video md:h-[70vh] rounded-2xl overflow-clip'>
+              className='shrink-0 w-[60vw] aspect-[9/16] md:aspect-video rounded-2xl overflow-clip'>
               <img
                 className='w-full h-full object-cover'
                 src={contents[0].poster}
@@ -76,7 +76,7 @@ export const Carousel = () => {
             </motion.div>
             <motion.div
               style={{ scale }}
-              className='relative shrink-0 w-[60vw] aspect-video md:h-[70vh] rounded-2xl overflow-clip'
+              className='relative shrink-0 w-[60vw] aspect-[9/16] md:aspect-video rounded-2xl overflow-clip'
             >
               <img
                 className='w-full h-full object-cover'
@@ -88,14 +88,14 @@ export const Carousel = () => {
                   active:{opacity:1},
                   inactive:{opacity:0},
                 }}
-                className='absolute left-0 bottom-0 flex items-center justify-between w-full text-white text-2xl font-bold p-5'>
+                className='absolute left-0 bottom-0 flex flex-col md:flex-row items-center gap-5 md:gap-0 md:justify-between w-full text-white text-lg md:text-2xl text-center font-bold p-5'>
                   <p>The best of the best</p>
                   <Button size="small">Click Here</Button>
               </motion.div>
             </motion.div>
             <motion.div 
               style={{opacity:postersOpacity, x:posterTranslateXright}}
-              className='shrink-0 w-[60vw] aspect-video md:h-[70vh] rounded-2xl overflow-clip'>
+              className='shrink-0 w-[60vw] aspect-[9/16] md:aspect-video rounded-2xl overflow-clip'>
               <img
                 className='w-full h-full object-cover'
                 src={contents[2].poster}
@@ -110,7 +110,7 @@ export const Carousel = () => {
       <motion.div
         variants={{active:{opacity:1, y:0}, inactive:{opacity:0, y:20}}}
         transition={{duration:0.4}}
-        className='space-y-3 -mt-[20vh] pt-10'>
+        className='space-y-3 -mt-[20vh] md:-mt-[10vh] pt-10'>
         <SmallCarousel contents={randomWishesSet2} />
         <div className='[--duration:40s] [--carousel-offset:-20px]'>
           <SmallCarousel contents={randomWishesSet1} />
@@ -126,11 +126,11 @@ const SmallCarousel = ({ contents }: { contents: Content[] }) => {
       <div className='relative flex gap-3 animate-carousel-move left-[var(--carousel-offset,0px)]'>
         {contents.map((content, index) => (
           <div
-            className='w-[23vw] aspect-video shrink-0'
+            className='w-[40vw] md:w-[23vw] aspect-[16/9] md:aspect-video shrink-0'
             key={`${content.name}-${index}`}
           >
             <img
-              className='w-full h-full object-cover rounded-2xl'
+              className='w-full h-full object-cover rounded-xl md:rounded-2xl'
               src={content.poster}
               alt={content.name}
             />

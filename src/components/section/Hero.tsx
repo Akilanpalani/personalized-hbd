@@ -36,7 +36,7 @@ export const Hero = () => {
             animate="hidden"
             viewport={{amount:0.98}}
           >
-          <h1 className="text-5xl font-bold mb-10">
+          <h1 className="text-xl md:text-4xl font-bold mb-10">
             Lorem ipsum dolor sit amet consectetur<br/> Pariatur, a!
           </h1>
             <Button className="mb-16" size="large">Large Button</Button>
