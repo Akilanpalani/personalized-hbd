@@ -3,7 +3,7 @@ import { FadeIn } from "../FadeIn"
 
 export const QuoteSection = () => {
 return(
-  <Container className="relative z-10 text-4xl font-bold text-white space-y-12 max-w-[692px] py-36">
+  <Container className="relative z-10 text-xl md:text-4xl font-bold text-white space-y-12 max-w-[692px] py-36">
     <FadeIn>
         <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
     </FadeIn>
